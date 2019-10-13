@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor hygrometerSensor;
 
     private Sensor thermometerSensor;
+
+    DataBaseHelper dataBaseHelper;
 
     private static final String TAG = "MainActivity";
 
@@ -57,9 +60,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dataBaseHelper = new DataBaseHelper(this);
+
         xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
         yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
         zAccelerometerValue = findViewById(R.id.zAccelerometerValue);
+
 
         xGyrometerValue = findViewById(R.id.xGyrometerValue);
         yGyrometerValue = findViewById(R.id.yGyrometerValue);
@@ -183,15 +189,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
        Sensor sensor = sensorEvent.sensor;
-
+       Integer transactionid = 0;
        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER)
        {
+           transactionid = transactionid +1;
            Log.d(TAG, "onSensorChanged:  X : "+sensorEvent.values[0]+
                    " Y : "+sensorEvent.values[1]+
                    " Z : "+sensorEvent.values[2]);
            xAccelerometerValue.setText("Accelerometer's X Co-ordinate : "+sensorEvent.values[0]);
            yAccelerometerValue.setText("Accelerometer's Y Co-ordinate : "+sensorEvent.values[1]);
            zAccelerometerValue.setText("Accelerometer's Z Co-ordinate : "+sensorEvent.values[2]);
+
+           boolean result =  dataBaseHelper.insertData(transactionid.toString(),
+                   String.valueOf(sensorEvent.values[0]),
+                   String.valueOf(sensorEvent.values[1]),
+                   String.valueOf(sensorEvent.values[2]));
+
+           Log.d(TAG, "Accelerometer DB Insertion :" +result);
+
        }
        else if(sensor.getType() == Sensor.TYPE_GYROSCOPE)
        {
