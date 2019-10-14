@@ -11,6 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.abhilekh.myapplication.Beans.Accelerometer;
+import com.abhilekh.myapplication.Beans.Gyrometer;
+import com.abhilekh.myapplication.Beans.Magnometer;
+import com.abhilekh.myapplication.Helper.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -29,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Sensor thermometerSensor;
 
-    AccelerometerDataBaseHelper accelerometerDataBaseHelper;
+    private DatabaseHelper databaseHelper;
+
 
     private static final String TAG = "MainActivity";
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        accelerometerDataBaseHelper = new AccelerometerDataBaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
 
         xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
         yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
@@ -192,39 +198,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER)
        {
            transactionid = transactionid +1;
-           Log.d(TAG, "onSensorChanged:  X : "+sensorEvent.values[0]+
-                   " Y : "+sensorEvent.values[1]+
-                   " Z : "+sensorEvent.values[2]);
-           xAccelerometerValue.setText("Accelerometer's X Co-ordinate : "+sensorEvent.values[0]);
-           yAccelerometerValue.setText("Accelerometer's Y Co-ordinate : "+sensorEvent.values[1]);
-           zAccelerometerValue.setText("Accelerometer's Z Co-ordinate : "+sensorEvent.values[2]);
+           Accelerometer accelerometer = new Accelerometer(transactionid,sensorEvent.values[0],
+                   sensorEvent.values[1],sensorEvent.values[2]);
+           Log.d(TAG, "onSensorChanged:  X : "+accelerometer.getxValue()+
+                                             " Y : "+accelerometer.getyValue()+
+                                             " Z : "+accelerometer.getzValue());
+           xAccelerometerValue.setText("Accelerometer's X Co-ordinate : "+accelerometer.getxValue());
+           yAccelerometerValue.setText("Accelerometer's Y Co-ordinate : "+accelerometer.getyValue());
+           zAccelerometerValue.setText("Accelerometer's Z Co-ordinate : "+accelerometer.getzValue());
 
-           boolean result =  accelerometerDataBaseHelper.insertData(transactionid.toString(),
-                   String.valueOf(sensorEvent.values[0]),
-                   String.valueOf(sensorEvent.values[1]),
-                   String.valueOf(sensorEvent.values[2]));
+           boolean result = databaseHelper.insertAccelerometerData(accelerometer);
 
            Log.d(TAG, "Accelerometer DB Insertion :" +result);
 
        }
        else if(sensor.getType() == Sensor.TYPE_GYROSCOPE)
        {
-           Log.d(TAG, "onSensorChanged:  X : "+sensorEvent.values[0]+
-                   " Y : "+sensorEvent.values[1]+
-                   " Z : "+sensorEvent.values[2]);
-           xGyrometerValue.setText("GyroMeter's X Co-ordinate : "+sensorEvent.values[0]);
-           yGyrometerValue.setText("GyroMeter's Y Co-ordinate : "+sensorEvent.values[1]);
-           zGyrometerValue.setText("GyroMeter's Z Co-ordinate : "+sensorEvent.values[2]);
+           transactionid = transactionid+1;
+           Gyrometer gyrometer = new Gyrometer(transactionid,sensorEvent.values[0],
+                   sensorEvent.values[1],sensorEvent.values[2]);
+           Log.d(TAG, "onSensorChanged:  X : "+gyrometer.getxValue()+
+                   " Y : "+gyrometer.getyValue()+
+                   " Z : "+gyrometer.getzValue());
+           xGyrometerValue.setText("GyroMeter's X Co-ordinate : "+gyrometer.getxValue());
+           yGyrometerValue.setText("GyroMeter's Y Co-ordinate : "+gyrometer.getyValue());
+           zGyrometerValue.setText("GyroMeter's Z Co-ordinate : "+gyrometer.getzValue());
+
+
+           boolean result =  databaseHelper.insertGyrometerData(gyrometer);
+
+           Log.d(TAG, "Gyrometer DB Insertion :" +result);
        }
 
        else if(sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
        {
-           Log.d(TAG, "onSensorChanged:  X : "+sensorEvent.values[0]+
-                   " Y : "+sensorEvent.values[1]+
-                   " Z : "+sensorEvent.values[2]);
-           xMagnetometerValue.setText("Magnometer's X Co-ordinate : "+sensorEvent.values[0]);
-           yMagnetometerValue.setText("Magnometer's Y Co-ordinate : "+sensorEvent.values[1]);
-           zMagnetometerValye.setText("Magnometer's Z Co-ordinate : "+sensorEvent.values[2]);
+           transactionid = transactionid+1;
+           Magnometer magnometer = new Magnometer(transactionid,sensorEvent.values[0],
+                   sensorEvent.values[1],sensorEvent.values[2]);
+           Log.d(TAG, "onSensorChanged:  X : "+magnometer.getxValue()+
+                   " Y : "+magnometer.getyValue()+
+                   " Z : "+magnometer.getzValue());
+           xMagnetometerValue.setText("GyroMeter's X Co-ordinate : "+magnometer.getxValue());
+           yMagnetometerValue.setText("GyroMeter's Y Co-ordinate : "+magnometer.getyValue());
+           zMagnetometerValye.setText("GyroMeter's Z Co-ordinate : "+magnometer.getzValue());
+
+
+           boolean result =  databaseHelper.insertMagnometerData(magnometer);
+
+           Log.d(TAG, "Magnometer DB Insertion :" +result);
+
+
        }
 
        else if(sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
