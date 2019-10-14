@@ -10,7 +10,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Sensor thermometerSensor;
 
-    DataBaseHelper dataBaseHelper;
+    AccelerometerDataBaseHelper accelerometerDataBaseHelper;
 
     private static final String TAG = "MainActivity";
 
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dataBaseHelper = new DataBaseHelper(this);
+        accelerometerDataBaseHelper = new AccelerometerDataBaseHelper(this);
 
         xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
         yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
            yAccelerometerValue.setText("Accelerometer's Y Co-ordinate : "+sensorEvent.values[1]);
            zAccelerometerValue.setText("Accelerometer's Z Co-ordinate : "+sensorEvent.values[2]);
 
-           boolean result =  dataBaseHelper.insertData(transactionid.toString(),
+           boolean result =  accelerometerDataBaseHelper.insertData(transactionid.toString(),
                    String.valueOf(sensorEvent.values[0]),
                    String.valueOf(sensorEvent.values[1]),
                    String.valueOf(sensorEvent.values[2]));
