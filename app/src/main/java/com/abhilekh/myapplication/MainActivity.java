@@ -250,8 +250,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
            boolean result =  databaseHelper.insertMagnometerData(magnometer);
 
            Log.d(TAG, "Magnometer DB Insertion :" +result);
-
-
        }
 
        else if(sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
@@ -284,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
            boolean result = databaseHelper.insertPhotometerData(photometer);
 
            Log.d(TAG, "Photometer DB Insertion :" +result);
-
        }
 
        else if(sensor.getType() == Sensor.TYPE_PRESSURE)
