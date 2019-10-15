@@ -17,18 +17,21 @@ import com.abhilekh.myapplication.Constants.DBConstants;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper
+{
 
     private static final String TAG = "DatabaseHelper";
 
-    public DatabaseHelper(Context context) {
+    public DatabaseHelper(Context context)
+    {
         super(context,DBConstants.DATABASE_NAME,null,6);
 
 
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
+    {
         sqLiteDatabase.execSQL("CREATE TABLE "+ DBConstants.GYROMETER_TABLE_NAME+
                 " (GyrometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
                 " XValue DOUBLE , YValue DOUBLE , ZValue DOUBLE  , CREATE_DATE_TIME  DATETIME) ");
@@ -52,7 +55,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
+    {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.ACCELEROMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.GYROMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.MAGNOMETER_TABLE_NAME);
@@ -60,7 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertAccelerometerData(Accelerometer accelerometer) {
+    public boolean insertAccelerometerData(Accelerometer accelerometer)
+    {
 
         Log.d(TAG, "insertAccelerometerData: Inside inserAccelerometer");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -82,7 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertGyrometerData(Gyrometer gyrometer) {
+    public boolean insertGyrometerData(Gyrometer gyrometer)
+    {
 
         Log.d(TAG, "insertGyrometerData: Inside insertGryometer");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -105,7 +111,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertMagnometerData(Magnometer magnometer) {
+    public boolean insertMagnometerData(Magnometer magnometer)
+    {
 
         Log.d(TAG, "insertMagnometerData: Inside insertMagnometer");
         SQLiteDatabase db = this.getWritableDatabase();

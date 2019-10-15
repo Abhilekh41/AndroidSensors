@@ -18,7 +18,8 @@ import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener
+{
 
     private SensorManager sensorManager;
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView hygrometerValue;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
