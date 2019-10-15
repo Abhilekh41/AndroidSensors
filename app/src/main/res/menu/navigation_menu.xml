@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/AccelerometerTab"
+        android:icon="@mipmap/baseline_directions_run_black_24dp"
+        android:title="Accelerometer"/>
+    <item android:id="@+id/GyrometerTab"
+        android:icon="@mipmap/baseline_gesture_black_24dp"
+        android:title="Gyrometer"/>
+    <item android:id="@+id/MagnometerTab"
+        android:icon="@mipmap/baseline_settings_remote_black_24dp"
+        android:title="Magnometer"/>
+    <item android:id="@+id/BarometerTab"
+        android:icon="@mipmap/baseline_wb_cloudy_black_24dp"
+        android:title="Barometer"/>
+    <item android:id="@+id/PhotometerTab"
+        android:icon="@mipmap/baseline_wb_sunny_black_24dp"
+        android:title="Photometer"/>
+    <item android:id="@+id/HygrometerTab"
+        android:icon="@mipmap/baseline_invert_colors_black_24dp"
+        android:title="Hygrometer"/>
+    <item android:id="@+id/ThermometerTab"
+        android:icon="@mipmap/baseline_title_black_24dp"
+        android:title="Thermometer" />
+
+</menu>

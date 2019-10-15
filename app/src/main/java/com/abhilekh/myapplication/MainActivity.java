@@ -1,6 +1,9 @@
 package com.abhilekh.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -9,6 +12,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.abhilekh.myapplication.Beans.Accelerometer;
@@ -17,6 +21,8 @@ import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
+import com.github.mikephil.charting.charts.PieChart;
+
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private DatabaseHelper databaseHelper;
 
+    private DrawerLayout drawerLayout;
+
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private static final String TAG = "MainActivity";
 
@@ -89,6 +98,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         barometerValue = findViewById(R.id.barometerValue);
         thermometerValue = findViewById(R.id.thermometerValue);
         hygrometerValue = findViewById(R.id.hygrometerValue);
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         Log.d(TAG, "onCreate: Initializing Sensor Services");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -277,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
            Photometer photometer = new Photometer(transactionid,sensorEvent.values[0]);
            Log.d(TAG, "onSensorChanged:  Photometer : "+sensorEvent.values[0]);
 
-           photometerValue.setText("Light Intensity : "+sensorEvent.values[0]);
+           photometerValue.setText("Light Intensity : "+photometer.getReading());
 
            boolean result = databaseHelper.insertPhotometerData(photometer);
 
@@ -295,5 +313,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i)
     {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

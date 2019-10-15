@@ -46,11 +46,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.PHOTOMETER_TABLE_NAME+
                 " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
-                DBConstants.PHOTOMETER_COL_2 +" DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+                " Reading DOUBLE , CREATE_DATE_TIME  DATETIME) ");
 
         sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.THERMOMETER_TABLE_NAME+
                 " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
-                DBConstants.THERMOMETER_COL_2 +" DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+                " Reading DOUBLE , CREATE_DATE_TIME  DATETIME) ");
 
     }
 
