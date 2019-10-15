@@ -11,6 +11,7 @@ import com.abhilekh.myapplication.Beans.Accelerometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
+import com.abhilekh.myapplication.Beans.Thermometer;
 import com.abhilekh.myapplication.Constants.DBConstants;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(Context context) {
-        super(context,DBConstants.DATABASE_NAME,null,5);
+        super(context,DBConstants.DATABASE_NAME,null,6);
 
 
     }
@@ -43,6 +44,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.PHOTOMETER_TABLE_NAME+
                 " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
                 DBConstants.PHOTOMETER_COL_2 +" DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+
+        sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.THERMOMETER_TABLE_NAME+
+                " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                DBConstants.THERMOMETER_COL_2 +" DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+
     }
 
     @Override
@@ -50,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.ACCELEROMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.GYROMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.MAGNOMETER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.THERMOMETER_TABLE_NAME);
 
     }
 
@@ -141,6 +148,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean insertThermometerData(Thermometer thermometer)
+    {
+        Log.d(TAG, "insertThermometerData : Inside insertThermometerData");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBConstants.THERMOMETER_COL_1, thermometer.getTransactionId());
+        contentValues.put(DBConstants.THERMOMETER_COL_2, thermometer.getReading());
+        contentValues.put(DBConstants.THERMOMETER_COL_3, sdf.format(new Date()));
+
+        long result = db.insert(DBConstants.THERMOMETER_TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            return false;
+        } else
+            return true;
+
+    }
 
 
 }

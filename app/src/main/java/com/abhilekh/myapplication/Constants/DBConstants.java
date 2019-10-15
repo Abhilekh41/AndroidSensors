@@ -71,6 +71,15 @@ public final class DBConstants
 
     public static final String PHOTOMETER_COL_3 = "CREATE_DATE_TIME";
 
+    //THERMOMETER
+    public static final String THERMOMETER_TABLE_NAME = "Thermometer_Table";
 
+    public static final String THERMOMETER_COL_0 = "ThermometerId";
+
+    public static final String THERMOMETER_COL_1 = "TransactionId";
+
+    public static final String THERMOMETER_COL_2 = "Reading";
+
+    public static final String THERMOMETER_COL_3 = "CREATE_DATE_TIME";
 
 }

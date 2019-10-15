@@ -15,6 +15,7 @@ import com.abhilekh.myapplication.Beans.Accelerometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
+import com.abhilekh.myapplication.Beans.Thermometer;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -259,8 +260,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
        else if(sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE)
        {
+           transactionid = transactionid+1;
+           Thermometer thermometer = new Thermometer(transactionid,sensorEvent.values[0]);
            Log.d(TAG, "onSensorChanged:  Thermometer : "+sensorEvent.values[0]);
-           thermometerValue.setText("Temperature : "+sensorEvent.values[0]);
+
+           thermometerValue.setText("Temperature : "+thermometer.getReading());
+
+           boolean result = databaseHelper.insertThermometerData(thermometer);
+
+           Log.d(TAG, "Thermometer DB insertion :" + result);
        }
 
        else if(sensor.getType() == Sensor.TYPE_LIGHT)
