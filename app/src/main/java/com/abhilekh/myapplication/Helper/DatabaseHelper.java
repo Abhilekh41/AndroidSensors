@@ -132,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DBConstants.PHOTOMETER_COL_2, photometer.getReading());
         contentValues.put(DBConstants.PHOTOMETER_COL_3, sdf.format(new Date()));
 
-        long result = db.insert(DBConstants.MAGNOMETER_TABLE_NAME, null, contentValues);
+        long result = db.insert(DBConstants.PHOTOMETER_TABLE_NAME, null, contentValues);
         if (result == -1) {
             return false;
         } else
