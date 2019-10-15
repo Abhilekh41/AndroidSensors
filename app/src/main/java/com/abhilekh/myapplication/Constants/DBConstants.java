@@ -60,5 +60,17 @@ public final class DBConstants
 
     public static final String MAGNOMETER_COL_5 = "CREATE_DATE_TIME";
 
+    //PHOTOMETER
+    public static final String PHOTOMETER_TABLE_NAME = "Photometer_Table";
+
+    public static final String PHOTOMETER_COL_O = "PhotometerId";
+
+    public static final String PHOTOMETER_COL_1= "TransactionId";
+
+    public static final String PHOTOMETER_COL_2 = "Reading";
+
+    public static final String PHOTOMETER_COL_3 = "CREATE_DATE_TIME";
+
+
 
 }

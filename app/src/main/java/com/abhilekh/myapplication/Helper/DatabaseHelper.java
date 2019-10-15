@@ -10,6 +10,7 @@ import android.util.Log;
 import com.abhilekh.myapplication.Beans.Accelerometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
+import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Constants.DBConstants;
 
 import java.text.SimpleDateFormat;
@@ -28,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE "+ DBConstants.GYROMETER_TABLE_NAME+
-                " (AccelerometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                " (GyrometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
                 " XValue DOUBLE , YValue DOUBLE , ZValue DOUBLE  , CREATE_DATE_TIME  DATETIME) ");
 
         sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.ACCELEROMETER_TABLE_NAME+
@@ -36,8 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " XValue DOUBLE , YValue DOUBLE , ZValue DOUBLE  , CREATE_DATE_TIME  DATETIME) ");
 
         sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.MAGNOMETER_TABLE_NAME+
-                " (AccelerometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                " (MagnometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
                 " XValue DOUBLE , YValue DOUBLE , ZValue DOUBLE  , CREATE_DATE_TIME  DATETIME) ");
+
+        sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.PHOTOMETER_TABLE_NAME+
+                " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                DBConstants.PHOTOMETER_COL_2 +" DOUBLE , CREATE_DATE_TIME  DATETIME) ");
     }
 
     @Override
@@ -106,6 +111,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DBConstants.MAGNOMETER_COL_3, magnometer.getyValue());
         contentValues.put(DBConstants.MAGNOMETER_COL_4, magnometer.getzValue());
         contentValues.put(DBConstants.MAGNOMETER_COL_5, sdf.format(new Date()));
+
+        long result = db.insert(DBConstants.MAGNOMETER_TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            return false;
+        } else
+            return true;
+
+    }
+
+    public boolean insertPhotometerData(Photometer photometer) {
+
+        Log.d(TAG, "insertPhotometerData: Inside insertPhotometerData");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBConstants.PHOTOMETER_COL_1, photometer.getTransactionId());
+        contentValues.put(DBConstants.PHOTOMETER_COL_2, photometer.getReading());
+        contentValues.put(DBConstants.PHOTOMETER_COL_3, sdf.format(new Date()));
 
         long result = db.insert(DBConstants.MAGNOMETER_TABLE_NAME, null, contentValues);
         if (result == -1) {

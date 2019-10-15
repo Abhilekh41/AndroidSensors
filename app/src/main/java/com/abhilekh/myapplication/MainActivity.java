@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.abhilekh.myapplication.Beans.Accelerometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
+import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -264,8 +265,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
        else if(sensor.getType() == Sensor.TYPE_LIGHT)
        {
+           transactionid =+1;
+           Photometer photometer = new Photometer(transactionid,sensorEvent.values[0]);
            Log.d(TAG, "onSensorChanged:  Photometer : "+sensorEvent.values[0]);
+
            photometerValue.setText("Light Intensity : "+sensorEvent.values[0]);
+
+           boolean result = databaseHelper.insertPhotometerData(photometer);
+
+           Log.d(TAG, "Photometer DB Insertion :" +result);
+
        }
 
        else if(sensor.getType() == Sensor.TYPE_PRESSURE)
