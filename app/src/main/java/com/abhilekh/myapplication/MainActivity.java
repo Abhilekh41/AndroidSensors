@@ -260,9 +260,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
            Log.d(TAG, "onSensorChanged:  X : "+magnometer.getxValue()+
                    " Y : "+magnometer.getyValue()+
                    " Z : "+magnometer.getzValue());
-           xMagnetometerValue.setText("GyroMeter's X Co-ordinate : "+magnometer.getxValue());
-           yMagnetometerValue.setText("GyroMeter's Y Co-ordinate : "+magnometer.getyValue());
-           zMagnetometerValye.setText("GyroMeter's Z Co-ordinate : "+magnometer.getzValue());
+           xMagnetometerValue.setText("Magnometer's X Co-ordinate : "+magnometer.getxValue());
+           yMagnetometerValue.setText("Magnometer's Y Co-ordinate : "+magnometer.getyValue());
+           zMagnetometerValye.setText("Magnometer's Z Co-ordinate : "+magnometer.getzValue());
 
 
            boolean result =  databaseHelper.insertMagnometerData(magnometer);
