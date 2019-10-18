@@ -82,4 +82,26 @@ public final class DBConstants
 
     public static final String THERMOMETER_COL_3 = "CREATE_DATE_TIME";
 
+    //BAROMETER
+    public static final String BAROMETER_TABLE_NAME = "Barometer_Table";
+
+    public static final String BAROMETER_COL_0 = "BarometerId";
+
+    public static final String BAROMETER_COL_1 = "TransactionId";
+
+    public static final String BAROMETER_COL_2 = "Reading";
+
+    public static final String BAROMETER_COL_3 = "CREATE_DATE_TIME";
+
+    //HYGROMETER
+    public static final String HYGROMETER_TABLE_NAME = "Hygrometer_Table";
+
+    public static final String HYGROMETER_COL_0 = "HygrometerId";
+
+    public static final String HYGROMETER_COL_1 = "TransactionId";
+
+    public static final String HYGROMETER_COL_2 = "Reading";
+
+    public static final String HYGROMETER_COL_3 = "CREATE_DATE_TIME";
+
 }

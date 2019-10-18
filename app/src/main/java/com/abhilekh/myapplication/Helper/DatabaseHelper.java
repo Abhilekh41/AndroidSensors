@@ -52,6 +52,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 " (PhotometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
                 " Reading DOUBLE , CREATE_DATE_TIME  DATETIME) ");
 
+        sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.HYGROMETER_TABLE_NAME+
+                " (HygrometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                " Reading DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+
+        sqLiteDatabase.execSQL("CREATE TABLE "+DBConstants.BAROMETER_TABLE_NAME+
+                " (BarometerId INTEGER PRIMARY KEY AUTOINCREMENT, TransactionId LONG ," +
+                " Reading DOUBLE , CREATE_DATE_TIME  DATETIME) ");
+
     }
 
     @Override
