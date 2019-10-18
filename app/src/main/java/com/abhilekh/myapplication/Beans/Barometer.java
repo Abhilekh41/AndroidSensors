@@ -8,6 +8,12 @@ public class Barometer
 
     private Float reading;
 
+    public Barometer(Integer transactionId, Float reading)
+    {
+        this.transactionId = transactionId;
+        this.reading = reading;
+    }
+
     public static Integer getBarometerId() {
         return barometerId;
     }

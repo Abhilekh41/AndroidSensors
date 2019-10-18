@@ -8,7 +8,9 @@ import android.hardware.Sensor;
 import android.util.Log;
 
 import com.abhilekh.myapplication.Beans.Accelerometer;
+import com.abhilekh.myapplication.Beans.Barometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
+import com.abhilekh.myapplication.Beans.Hygrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
@@ -176,6 +178,46 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(DBConstants.THERMOMETER_COL_3, sdf.format(new Date()));
 
         long result = db.insert(DBConstants.THERMOMETER_TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            return false;
+        } else
+            return true;
+
+    }
+
+    public boolean insertHygrometerData(Hygrometer hygrometer)
+    {
+        Log.d(TAG, "insertHygrometerData : Inside insertHygrometerData");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBConstants.HYGROMETER_COL_1, hygrometer.getTransactionId());
+        contentValues.put(DBConstants.HYGROMETER_COL_2, hygrometer.getReading());
+        contentValues.put(DBConstants.HYGROMETER_COL_3, sdf.format(new Date()));
+
+        long result = db.insert(DBConstants.HYGROMETER_TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            return false;
+        } else
+            return true;
+
+    }
+
+    public boolean insertBarometerData(Barometer barometer)
+    {
+        Log.d(TAG, "insertBarometerData : Inside insertBarometerData");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBConstants.BAROMETER_COL_1, barometer.getTransactionId());
+        contentValues.put(DBConstants.BAROMETER_COL_2, barometer.getReading());
+        contentValues.put(DBConstants.BAROMETER_COL_3, sdf.format(new Date()));
+
+        long result = db.insert(DBConstants.BAROMETER_TABLE_NAME, null, contentValues);
         if (result == -1) {
             return false;
         } else

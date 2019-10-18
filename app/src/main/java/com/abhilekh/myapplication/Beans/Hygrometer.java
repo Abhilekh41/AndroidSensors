@@ -8,6 +8,12 @@ public class Hygrometer
 
     private Float reading;
 
+    public Hygrometer(Integer transactionId, Float reading)
+    {
+        this.transactionId = transactionId;
+        this.reading = reading;
+    }
+
     public static Integer getHygrometerId() {
         return hygrometerId;
     }

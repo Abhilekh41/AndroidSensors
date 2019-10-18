@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.abhilekh.myapplication.Beans.Accelerometer;
+import com.abhilekh.myapplication.Beans.Barometer;
 import com.abhilekh.myapplication.Beans.Gyrometer;
+import com.abhilekh.myapplication.Beans.Hygrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
@@ -272,8 +274,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
        else if(sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
        {
+           transactionid = +1;
+           Hygrometer hygrometer = new Hygrometer(transactionid,sensorEvent.values[0]);
            Log.d(TAG, "onSensorChanged:  Hygrometer : "+sensorEvent.values[0]);
            hygrometerValue.setText("Humidity : "+sensorEvent.values[0]);
+
+           boolean result = databaseHelper.insertHygrometerData(hygrometer);
+
+           Log.d(TAG, "Hygrometer DB Insertion :" +result);
        }
 
        else if(sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE)
@@ -304,8 +312,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
        else if(sensor.getType() == Sensor.TYPE_PRESSURE)
        {
-           Log.d(TAG, "onSensorChanged:  Barometer : "+sensorEvent.values[0]);
-           barometerValue.setText("Pressure : "+sensorEvent.values[0]);
+           transactionid = +1;
+           Barometer barometer = new Barometer(transactionid,sensorEvent.values[0]);
+           Log.d(TAG, "onSensorChanged:  Hygrometer : "+sensorEvent.values[0]);
+           hygrometerValue.setText("Humidity : "+sensorEvent.values[0]);
+
+           boolean result = databaseHelper.insertBarometerData(barometer);
+
+           Log.d(TAG, "Barometer DB Insertion :" +result);
        }
     }
 
