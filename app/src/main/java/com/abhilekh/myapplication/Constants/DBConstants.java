@@ -1,8 +1,5 @@
 package com.abhilekh.myapplication.Constants;
 
-
-import android.provider.SyncStateContract;
-
 public final class DBConstants
 {
 
