@@ -71,6 +71,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.GYROMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.MAGNOMETER_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.THERMOMETER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.BAROMETER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.PHOTOMETER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DBConstants.HYGROMETER_TABLE_NAME);
 
     }
 
