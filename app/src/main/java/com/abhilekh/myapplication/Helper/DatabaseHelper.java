@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.hardware.Sensor;
 import android.util.Log;
 
 import com.abhilekh.myapplication.Beans.Accelerometer;
@@ -211,6 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public boolean insertBarometerData(Barometer barometer)
     {
         Log.d(TAG, "insertBarometerData : Inside insertBarometerData");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
@@ -221,6 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(DBConstants.BAROMETER_COL_3, sdf.format(new Date()));
 
         long result = db.insert(DBConstants.BAROMETER_TABLE_NAME, null, contentValues);
+
         if (result == -1) {
             return false;
         } else
