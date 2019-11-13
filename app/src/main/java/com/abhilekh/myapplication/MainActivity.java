@@ -23,7 +23,6 @@ import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
-import com.github.mikephil.charting.charts.PieChart;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
@@ -154,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         else
         {
             Log.d(TAG, "onCreate: Magetometer is not supported on your device");
-            xMagnetometerValue.setText("Magetometer is not supported on your device");
-            yMagnetometerValue.setText("Magetometer is not supported on your device");
-            zMagnetometerValye.setText("Magetometer is not supported on your device");
+            xMagnetometerValue.setText("Magnetometer is not supported on your device");
+            yMagnetometerValue.setText("Magnetometer is not supported on your device");
+            zMagnetometerValye.setText("Magnetometer is not supported on your device");
         }
 
         barometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
