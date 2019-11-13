@@ -204,7 +204,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
             return false;
         } else
             return true;
-
     }
 
     public boolean insertBarometerData(Barometer barometer)
