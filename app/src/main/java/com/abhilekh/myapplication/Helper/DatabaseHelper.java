@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public boolean insertGyrometerData(Gyrometer gyrometer)
     {
 
-        Log.d(TAG, "insertGyrometerData: Inside insertGryometer");
+        Log.d(TAG, "insertGyrometerData: Inside insertGryometer ");
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
