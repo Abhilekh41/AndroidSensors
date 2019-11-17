@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public DatabaseHelper(Context context)
     {
-        super(context,DBConstants.DATABASE_NAME,null,6);
+        super(context,DBConstants.DATABASE_NAME,null,10);
 
 
     }
@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public boolean insertAccelerometerData(Accelerometer accelerometer)
     {
 
-        Log.d(TAG, "insertAccelerometerData: Inside inserAccelerometer");
+        Log.d(TAG, "insertAccelerometerData: Inside insertAccelerometer");
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mmm:ss");
@@ -121,7 +121,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
             return true;
 
     }
-
 
     public boolean insertMagnometerData(Magnometer magnometer)
     {
