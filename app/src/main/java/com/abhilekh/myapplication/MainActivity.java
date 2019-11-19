@@ -3,6 +3,7 @@ package com.abhilekh.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
@@ -22,10 +23,18 @@ import com.abhilekh.myapplication.Beans.Hygrometer;
 import com.abhilekh.myapplication.Beans.Magnometer;
 import com.abhilekh.myapplication.Beans.Photometer;
 import com.abhilekh.myapplication.Beans.Thermometer;
+import com.abhilekh.myapplication.Fragments.AccelerometerActivity;
+import com.abhilekh.myapplication.Fragments.BarometerActivity;
+import com.abhilekh.myapplication.Fragments.GyrometerActivity;
+import com.abhilekh.myapplication.Fragments.HygrometerActivity;
+import com.abhilekh.myapplication.Fragments.MagnometerActivity;
+import com.abhilekh.myapplication.Fragments.PhotometerActivity;
+import com.abhilekh.myapplication.Fragments.ThermometerActivity;
 import com.abhilekh.myapplication.Helper.DatabaseHelper;
+import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener
+public class MainActivity extends AppCompatActivity implements SensorEventListener,NavigationView.OnNavigationItemSelectedListener
 {
 
     private SensorManager sensorManager;
@@ -73,46 +82,38 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //Hygrometer
     TextView hygrometerValue;
 
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        assigningValues();
         setContentView(R.layout.activity_main);
 
         databaseHelper = new DatabaseHelper(this);
-
-        xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
-        yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
-        zAccelerometerValue = findViewById(R.id.zAccelerometerValue);
-
-
-        xGyrometerValue = findViewById(R.id.xGyrometerValue);
-        yGyrometerValue = findViewById(R.id.yGyrometerValue);
-        zGyrometerValue = findViewById(R.id.zGyrometerValue);
-
-
-        xMagnetometerValue = findViewById(R.id.xMagnometerValue);
-        yMagnetometerValue = findViewById(R.id.yMagnometerValue);
-        zMagnetometerValye = findViewById(R.id.zMagnometerValue);
-
-        photometerValue =  findViewById(R.id.photometerValue);
-        barometerValue = findViewById(R.id.barometerValue);
-        thermometerValue = findViewById(R.id.thermometerValue);
-        hygrometerValue = findViewById(R.id.hygrometerValue);
-
         drawerLayout = findViewById(R.id.drawerLayout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
 
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if(savedInstanceState == null)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new AccelerometerActivity()).commit();
+            navigationView.setCheckedItem(R.id.AccelerometerTab);
+        }
 
         Log.d(TAG, "onCreate: Initializing Sensor Services");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        setContentView(R.layout.accelerometer_layout);
         if(accelerometerSensor!=null)
         {
             sensorManager.registerListener(MainActivity.this,accelerometerSensor,
@@ -209,13 +210,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Log.d(TAG, "onCreate: Hygrometer is not supported on your device");
             hygrometerValue.setText("Hygrometer is not supported on your device");
         }
-
+        setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Sensor Registration Done");
      }
 
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
+    public void onSensorChanged(SensorEvent sensorEvent)
+    {
        Sensor sensor = sensorEvent.sensor;
        Integer transactionid = 0;
        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER)
@@ -255,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
        else if(sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
        {
+           setContentView(R.layout.magnometer_layout);
            transactionid = transactionid+1;
            Magnometer magnometer = new Magnometer(transactionid,sensorEvent.values[0],
                    sensorEvent.values[1],sensorEvent.values[2]);
@@ -320,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
            Log.d(TAG, "Barometer DB Insertion :" +result);
        }
+        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -335,5 +339,69 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+        switch (menuItem.getItemId())
+        {
+            case R.id.AccelerometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new AccelerometerActivity()).commit();
+                break;
+            case R.id.GyrometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new GyrometerActivity()).commit();
+                break;
+            case R.id.HygrometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new HygrometerActivity()).commit();
+                break;
+            case R.id.PhotometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new PhotometerActivity()).commit();
+                break;
+            case R.id.BarometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new BarometerActivity()).commit();
+                break;
+            case R.id.MagnometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new MagnometerActivity()).commit();
+                break;
+            case R.id.ThermometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,new ThermometerActivity()).commit();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void assigningValues()
+    {
+        setContentView(R.layout.accelerometer_layout);
+        xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
+        yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
+        zAccelerometerValue = findViewById(R.id.zAccelerometerValue);
+
+        setContentView(R.layout.gyrometer_layout);
+        xGyrometerValue = findViewById(R.id.xGyrometerValue);
+        yGyrometerValue = findViewById(R.id.yGyrometerValue);
+        zGyrometerValue = findViewById(R.id.zGyrometerValue);
+
+
+        setContentView(R.layout.magnometer_layout);
+        xMagnetometerValue = findViewById(R.id.xMagnometerValue);
+        yMagnetometerValue = findViewById(R.id.yMagnometerValue);
+        zMagnetometerValye = findViewById(R.id.zMagnometerValue);
+
+
+        setContentView(R.layout.photometer_layout);
+        photometerValue =  findViewById(R.id.photometerValue);
+
+        setContentView(R.layout.barometer_layout);
+        barometerValue = findViewById(R.id.barometerValue);
+
+        setContentView(R.layout.thermometer_layout);
+        thermometerValue = findViewById(R.id.thermometerValue);
+
+        setContentView(R.layout.hygrometer_layout);
+        hygrometerValue = findViewById(R.id.hygrometerValue);
     }
 }
