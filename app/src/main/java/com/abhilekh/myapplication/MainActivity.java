@@ -34,7 +34,7 @@ import com.abhilekh.myapplication.Helper.DatabaseHelper;
 import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener
+public class MainActivity extends AppCompatActivity implements SensorEventListener,NavigationView.OnNavigationItemSelectedListener
 {
 
     private SensorManager sensorManager;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
         databaseHelper = new DatabaseHelper(this);
-
+        drawerLayout = findViewById(R.id.drawerLayout);
         xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
         yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
         zAccelerometerValue = findViewById(R.id.zAccelerometerValue);
@@ -111,6 +111,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         thermometerValue = findViewById(R.id.ThermometerValue);
 
         hygrometerValue = findViewById(R.id.HygrometerValue);
+
+        navigationView = findViewById(R.id.design_navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -332,5 +341,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i)
     {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }
