@@ -72,22 +72,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:id="@+id/zMagnometerValue"
-        />
+        android:id="@+id/zMagnometerValue" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:id="@+id/PhotometerValue"
-        />
+        android:id="@+id/PhotometerValue" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:id="@+id/HygrometerValue"
-        />
+        android:id="@+id/HygrometerValue" />
 
     <TextView
         android:layout_width="match_parent"
@@ -99,8 +96,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:id="@+id/ThermometerValue"
-        />
+        android:id="@+id/ThermometerValue" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frameLayout">
+        </FrameLayout>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

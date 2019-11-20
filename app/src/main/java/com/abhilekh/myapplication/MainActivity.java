@@ -92,6 +92,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         databaseHelper = new DatabaseHelper(this);
         drawerLayout = findViewById(R.id.drawerLayout);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         xAccelerometerValue = findViewById(R.id.xAccelerometerValue);
         yAccelerometerValue = findViewById(R.id.yAccelerometerValue);
         zAccelerometerValue = findViewById(R.id.zAccelerometerValue);
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         xGyrometerValue = findViewById(R.id.xGyrometerValue);
         yGyrometerValue = findViewById(R.id.yGyrometerValue);
         zGyrometerValue = findViewById(R.id.zGyrometerValue);
+
 
         xMagnetometerValue = findViewById(R.id.xMagnometerValue);
         yMagnetometerValue = findViewById(R.id.yMagnometerValue);
@@ -115,12 +123,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         navigationView = findViewById(R.id.design_navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if(savedInstanceState == null)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new AccelerometerActivity()).commit();
+            navigationView.setCheckedItem(R.id.AccelerometerTab);
+        }
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -354,7 +361,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+        switch (menuItem.getItemId())
+        {
+            case R.id.AccelerometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new AccelerometerActivity()).commit();
+                break;
+            case R.id.GyrometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new GyrometerActivity()).commit();
+                break;
+            case R.id.MagnometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new MagnometerActivity()).commit();
+                break;
+            case R.id.PhotometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new PhotometerActivity()).commit();
+                break;
+            case R.id.HygrometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new HygrometerActivity()).commit();
+                break;
+            case R.id.ThermometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new ThermometerActivity()).commit();
+                break;
+            case R.id.BarometerTab:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new BarometerActivity()).commit();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
